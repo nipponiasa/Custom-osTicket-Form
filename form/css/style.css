@@ -1,0 +1,61 @@
+/* NipponiaForm custom styles */
+
+/* ── Brand variables ── */
+:root {
+    --nipponia-blue:       hsl(217, 98%, 36%);
+    --nipponia-blue-dark:  hsl(217, 100%, 12%);
+    --nipponia-blue-input: hsl(217, 60%, 20%);
+}
+
+/* Override Bootstrap dark mode input background */
+[data-bs-theme="dark"] {
+    --bs-tertiary-bg: var(--nipponia-blue-input);
+    --bs-body-bg:     var(--nipponia-blue-input);
+}
+
+/* ── Page background ── */
+body {
+    background-color: var(--nipponia-blue-dark) !important;
+}
+
+/* ── Content width constraint ── */
+.site-header .container,
+main .container,
+.site-footer .container {
+    max-width: 720px;
+}
+
+/* ── Header ── */
+.site-header {
+    border-bottom: 1px solid var(--bs-border-color);
+    padding: 0.75rem 0;
+}
+
+.site-logo {
+    height: 48px;
+    width: auto;
+}
+
+.flag-icon {
+    height: 22px;
+    width: 40px;
+    border-radius: 3px;
+    opacity: 0.85;
+    cursor: pointer;
+}
+
+/* ── Forms ── */
+input, textarea, button{
+    /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+}
+label, button.btn {
+    font-weight: 500;
+}
+
+/* ── Footer ── */
+.site-footer {
+    border-top: 1px solid var(--bs-border-color);
+    padding: 1rem 0;
+    margin-top: auto;
+    color: var(--bs-secondary-color);
+}

@@ -1,0 +1,23 @@
+# Εδώ η λογική είναι να δηλώσουμε πια θέλουμε στο repository
+# διότι το project περιέχει και όλα τα αρχεία του osTicket.
+
+# Αγνόησε τα πάντα
+*
+
+# Εξαίρεσε (δηλαδή συμπερίλαβε) τα αρχεία του project
+!.gitignore
+!.github/
+!.github/**
+!NipponiaForm.code-workspace
+!docs/
+!docs/**
+
+# Εξαίρεσε (δηλαδή συμπερίλαβε) τα αρχεία σχετικά με τη φόρμα
+!new.php
+!form/
+!form/**
+
+# Αλλά αγνόησε το config.php (περιέχει credentials), το debug.log, και τα προσωρινά αρχεία
+form/config.php
+form/debug.log
+~*
