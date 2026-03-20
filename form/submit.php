@@ -37,7 +37,7 @@ if (REQUIRE_AUTH) {
 }
 
 // Collect and sanitize required fields.
-$required = ['name', 'email', 'brand', 'vin', 'message', 'km'];
+$required = ['name', 'email', 'brand', 'vin', 'description', 'km'];
 $data = [];
 foreach ($required as $field) {
     $value = trim($_POST[$field] ?? '');
@@ -73,6 +73,20 @@ foreach (['model', 'color', 'order_no', 'organization', 'observations', 'parts_r
 // Auto-generate ticket subject from model and VIN.
 $subject = 'Technical - ' . $data['model'] . ' - ' . $data['vin'];
 
+// Build combined message body from description + optional sections.
+$message_parts = ['[DESCRIPTION]', $data['description']];
+if ($data['observations'] !== '') {
+    $message_parts[] = '';
+    $message_parts[] = '[OBSERVATIONS]';
+    $message_parts[] = $data['observations'];
+}
+if ($data['parts_required'] !== '') {
+    $message_parts[] = '';
+    $message_parts[] = '[PARTS REQUIRED]';
+    $message_parts[] = $data['parts_required'];
+}
+$combined_message = implode("\n", $message_parts);
+
 // Build attachments array in RFC 2397 format expected by the osTicket API.
 $attachments = [];
 if (!empty($_FILES['attachments']['name'][0])) {
@@ -91,7 +105,7 @@ $payload = [
     'name'          => $data['name'],
     'email'         => $data['email'],
     'subject'       => $subject,
-    'message'       => 'data:text/plain;base64,' . base64_encode($data['message']),
+    'message'       => 'data:text/plain;base64,' . base64_encode($combined_message),
     'ip'            => $_SERVER['REMOTE_ADDR'] ?? '',
     'source'        => 'API',
     // Custom ticket fields (matched by name in osTicket Form Designer):
@@ -101,8 +115,6 @@ $payload = [
     'color'         => $data['color'],
     'order_no'      => $data['order_no'],
     'km'            => $data['km'],
-    'observations'  => $data['observations'],
-    'parts_required'=> $data['parts_required'],
     'attachments'   => $attachments,
 ];
 

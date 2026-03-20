@@ -24,7 +24,7 @@ return [
     'field.topic'               => 'Type of Request',
     'field.topic_placeholder'   => '— Select a type —',
 
-    'field.message'        => 'Description of problem or failure',
+    'field.description'        => 'Description of problem or failure',
     'field.observations'   => 'Observations',
     'field.parts_required' => 'Parts required',
 

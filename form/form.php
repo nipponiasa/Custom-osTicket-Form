@@ -107,9 +107,9 @@ require __DIR__ . '/header.php';
             </div>
 
             <div class="mb-3">
-                <label for="message" class="form-label"><?= t('field.message') ?></label>
-                <textarea class="form-control" id="message" name="message"
-                          rows="5" required><?= htmlspecialchars($_POST['message'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+                <label for="description" class="form-label"><?= t('field.description') ?></label>
+                <textarea class="form-control" id="description" name="description"
+                          rows="5" required><?= htmlspecialchars($_POST['description'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
             </div>
 
             <div class="mb-3">

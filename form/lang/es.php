@@ -24,7 +24,7 @@ return [
     'field.topic'               => 'Tipo de solicitud',
     'field.topic_placeholder'   => '— Selecciona un tipo —',
 
-    'field.message'        => 'Descripción del problema o fallo',
+    'field.description'        => 'Descripción del problema o fallo',
     'field.observations'   => 'Observaciones',
     'field.parts_required' => 'Piezas requeridas',
 
