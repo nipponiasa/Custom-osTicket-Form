@@ -7,6 +7,17 @@
     --nipponia-blue-input: hsl(217, 60%, 20%);
 }
 
+/* Prevent all non-defined custom elements from displaying: */
+*:not(:defined) { display: none; }
+
+/* Hide cloaked elements for Alpine.js */
+[x-cloak] { display: none !important; }
+
+/* View transition between pages */
+@view-transition {
+    navigation: auto;
+}
+
 /* Override Bootstrap dark mode input background */
 [data-bs-theme="dark"] {
     --bs-tertiary-bg: var(--nipponia-blue-input);

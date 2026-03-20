@@ -5,9 +5,9 @@ require __DIR__ . '/form-bootstrap.php';
 $base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/');
 
 // Pre-fill from the authenticated client; POST values take priority on re-render.
-$prefill_name    = $_POST['name']    ?? (isset($thisclient) ? $thisclient->getName()    : '');
-$prefill_email   = $_POST['email']   ?? (isset($thisclient) ? $thisclient->getEmail()   : '');
-$prefill_company = $_POST['company'] ?? (isset($thisclient) ? ($thisclient->getOrganization()?->getName() ?? '') : '');
+$prefill_name  = $_POST['name']         ?? (isset($thisclient) ? $thisclient->getName()                             : '');
+$prefill_email = $_POST['email']        ?? (isset($thisclient) ? $thisclient->getEmail()                            : '');
+$prefill_org   = $_POST['organization'] ?? (isset($thisclient) ? ($thisclient->getOrganization()?->getName() ?? '') : '');
 
 // Fetch active public help topics (only available when osTicket is bootstrapped).
 $help_topics = [];
@@ -26,6 +26,57 @@ require __DIR__ . '/header.php';
         <form method="post" action="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/form/submit.php"
               enctype="multipart/form-data">
 
+            <h2 class="border-bottom pb-2 mt-2 mb-3"><?= t('section.motorcycle') ?></h2>
+
+            <div class="mb-3">
+                <label for="brand" class="form-label"><?= t('field.brand') ?></label>
+                <select class="form-select" id="brand" name="brand" required>
+                    <option value="Nipponia" <?= (($_POST['brand'] ?? '') !== 'PGO') ? 'selected' : '' ?>>Nipponia</option>
+                    <option value="PGO" <?= (($_POST['brand'] ?? '') === 'PGO') ? 'selected' : '' ?>>PGO</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="vin" class="form-label"><?= t('field.vin') ?></label>
+                <input type="text" class="form-control" id="vin" name="vin"
+                       value="<?= htmlspecialchars($_POST['vin'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label for="model" class="form-label"><?= t('field.model') ?></label>
+                <input type="text" class="form-control" id="model" name="model"
+                       value="<?= htmlspecialchars($_POST['model'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+            </div>
+
+            <div class="mb-3">
+                <label for="color" class="form-label"><?= t('field.color') ?></label>
+                <input type="text" class="form-control" id="color" name="color"
+                       value="<?= htmlspecialchars($_POST['color'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+            </div>
+
+            <div class="mb-3">
+                <label for="order_no" class="form-label"><?= t('field.order_no') ?></label>
+                <input type="text" class="form-control" id="order_no" name="order_no"
+                       value="<?= htmlspecialchars($_POST['order_no'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+            </div>
+
+            <div class="mb-3">
+                <label for="km" class="form-label"><?= t('field.km') ?></label>
+                <input type="number" class="form-control" id="km" name="km"
+                       value="<?= htmlspecialchars($_POST['km'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                       min="0" step="1" required>
+            </div>
+
+            <h2 class="border-bottom pb-2 mt-4 mb-3"><?= t('section.distributor') ?></h2>
+
+            <div class="mb-3">
+                <label for="organization" class="form-label"><?= t('field.company') ?></label>
+                <input type="text" class="form-control" id="organization" name="organization"
+                       value="<?= htmlspecialchars($prefill_org, ENT_QUOTES, 'UTF-8') ?>"
+                       readonly>
+            </div>
+
             <div class="mb-3">
                 <label for="name" class="form-label"><?= t('field.name') ?></label>
                 <input type="text" class="form-control" id="name" name="name"
@@ -40,19 +91,7 @@ require __DIR__ . '/header.php';
                        required readonly>
             </div>
 
-            <div class="mb-3">
-                <label for="company" class="form-label"><?= t('field.company') ?></label>
-                <input type="text" class="form-control" id="company" name="company"
-                       value="<?= htmlspecialchars($prefill_company, ENT_QUOTES, 'UTF-8') ?>"
-                       readonly>
-            </div>
-
-            <div class="mb-3">
-                <label for="subject" class="form-label"><?= t('field.subject') ?></label>
-                <input type="text" class="form-control" id="subject" name="subject"
-                       value="<?= htmlspecialchars($_POST['subject'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                       required>
-            </div>
+            <h2 class="border-bottom pb-2 mt-4 mb-3"><?= t('section.description') ?></h2>
 
             <div class="mb-3">
                 <label for="topicId" class="form-label"><?= t('field.topic') ?></label>
@@ -68,16 +107,21 @@ require __DIR__ . '/header.php';
             </div>
 
             <div class="mb-3">
-                <label for="vin" class="form-label"><?= t('field.vin') ?></label>
-                <input type="text" class="form-control" id="vin" name="vin"
-                       value="<?= htmlspecialchars($_POST['vin'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                       required>
-            </div>
-
-            <div class="mb-3">
                 <label for="message" class="form-label"><?= t('field.message') ?></label>
                 <textarea class="form-control" id="message" name="message"
                           rows="5" required><?= htmlspecialchars($_POST['message'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="observations" class="form-label"><?= t('field.observations') ?></label>
+                <textarea class="form-control" id="observations" name="observations"
+                          rows="3"><?= htmlspecialchars($_POST['observations'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="parts_required" class="form-label"><?= t('field.parts_required') ?></label>
+                <textarea class="form-control" id="parts_required" name="parts_required"
+                          rows="3"><?= htmlspecialchars($_POST['parts_required'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
             </div>
 
             <div class="mb-3">
