@@ -110,6 +110,12 @@ if (!empty($_POST['topicId']) && ctype_digit((string) $_POST['topicId'])) {
     $payload['topicId'] = (int) $_POST['topicId'];
 }
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$_result_url = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/') . '/result.php';
+
 $ch = curl_init(OSTICKET_API_URL);
 curl_setopt_array($ch, [
     CURLOPT_POST           => true,
@@ -128,15 +134,12 @@ $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 $curlError  = curl_error($ch);
 curl_close($ch);
 
-if ($curlError) {
-    http_response_code(502);
-    exit('Connection error: ' . $curlError);
+if (!$curlError && $statusCode === 201) {
+    $_SESSION['form_flash'] = ['status' => 'success', 'ticket_id' => trim($response)];
+} else {
+    $error_detail = $curlError ?: ('HTTP ' . $statusCode . ': ' . trim($response));
+    $_SESSION['form_flash'] = ['status' => 'error', 'detail' => $error_detail];
 }
 
-if ($statusCode === 201) {
-    http_response_code(201);
-    exit('Ticket created: ' . $response);
-}
-
-http_response_code($statusCode ?: 500);
-exit('API error: ' . $response);
+header('Location: ' . $_result_url);
+exit;

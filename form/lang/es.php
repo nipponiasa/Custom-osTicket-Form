@@ -33,4 +33,14 @@ return [
     'validation.required'  => 'Este campo es obligatorio.',
     'success.ticket'       => 'Tu ticket ha sido enviado correctamente.',
     'error.generic'        => 'Se ha producido un error. Por favor, inténtalo de nuevo.',
+
+    'result.page.title'       => 'Ticket enviado',
+    'result.success.title'    => 'Ticket enviado correctamente',
+    'result.success.lead'     => 'Tu solicitud ha sido enviada. Puedes seguir su progreso desde tu página de tickets.',
+    'result.ticket_number'    => 'Número de ticket:',
+    'result.view_tickets'     => 'Ver mis tickets',
+    'result.new_ticket'       => 'Enviar otro ticket',
+    'result.error.title'      => 'Error al enviar',
+    'result.error.lead'       => 'Se ha producido un error al enviar tu solicitud. Por favor, inténtalo de nuevo.',
+    'result.back'             => 'Volver al formulario',
 ];

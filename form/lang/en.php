@@ -33,4 +33,14 @@ return [
     'validation.required'  => 'This field is required.',
     'success.ticket'       => 'Your ticket has been submitted successfully.',
     'error.generic'        => 'An error occurred. Please try again.',
+
+    'result.page.title'       => 'Ticket Submitted',
+    'result.success.title'    => 'Ticket submitted successfully',
+    'result.success.lead'     => 'Your request has been submitted. You can track its progress from your tickets page.',
+    'result.ticket_number'    => 'Ticket number:',
+    'result.view_tickets'     => 'View my tickets',
+    'result.new_ticket'       => 'Submit another ticket',
+    'result.error.title'      => 'Submission failed',
+    'result.error.lead'       => 'An error occurred while submitting your request. Please try again.',
+    'result.back'             => 'Back to form',
 ];
