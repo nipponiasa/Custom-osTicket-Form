@@ -51,8 +51,18 @@ main .container,
     height: 22px;
     width: 40px;
     border-radius: 3px;
-    opacity: 0.85;
+    opacity: 0.45;
     cursor: pointer;
+    transition: opacity 0.15s ease;
+}
+
+.flag-icon:hover,
+.flag-icon.flag-active {
+    opacity: 1;
+}
+
+.lang-flags a {
+    line-height: 0;
 }
 
 /* ── Forms ── */

@@ -56,7 +56,7 @@ require __DIR__ . '/header.php';
             </div>
 
             <div class="mb-3">
-                <label for="order_no" class="form-label"><?= t('field.order_no') ?></label>
+                <label for="order_no" class="form-label"><?= t('field.order_no') ?> - to be hidden!</label>
                 <input type="text" class="form-control" id="order_no" name="order_no"
                        value="<?= htmlspecialchars($_POST['order_no'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
             </div>

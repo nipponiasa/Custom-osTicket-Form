@@ -22,8 +22,12 @@ $_res = htmlspecialchars($base, ENT_QUOTES, 'UTF-8') . '/form/resources';
                         <img src="<?= $_res ?>/nipponia-logo.png" alt="Nipponia" class="site-logo">
                     </a>
                     <div class="lang-flags d-flex align-items-center gap-2">
-                        <img src="<?= $_res ?>/gb.svg" alt="English" class="flag-icon" title="English">
-                        <img src="<?= $_res ?>/es.svg" alt="Español" class="flag-icon" title="Español">
+                        <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/new.php?lang=en">
+                            <img src="<?= $_res ?>/gb.svg" alt="English" class="flag-icon<?= $lang === 'en' ? ' flag-active' : '' ?>" title="English">
+                        </a>
+                        <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/new.php?lang=es">
+                            <img src="<?= $_res ?>/es.svg" alt="Español" class="flag-icon<?= $lang === 'es' ? ' flag-active' : '' ?>" title="Español">
+                        </a>
                     </div>
         </div>
     </header>

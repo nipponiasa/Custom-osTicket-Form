@@ -34,11 +34,15 @@ function t(string $key, array $params = []): string {
 }
 
 // Resolves the active language from GET param or session; persists choice to session.
+// Accepts both short codes ('en', 'es') and locale codes ('en_US', 'es_ES').
 function form_resolve_language(): string {
     global $form_supported_langs;
 
-    if (isset($_GET['lang']) && in_array($_GET['lang'], $form_supported_langs, true)) {
-        $_SESSION['form_lang'] = $_GET['lang'];
+    if (isset($_GET['lang'])) {
+        $code = strtolower(substr($_GET['lang'], 0, 2));
+        if (in_array($code, $form_supported_langs, true)) {
+            $_SESSION['form_lang'] = $code;
+        }
     }
 
     return $_SESSION['form_lang'] ?? 'en';
