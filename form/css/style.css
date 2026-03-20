@@ -52,6 +52,10 @@ label, button.btn {
     font-weight: 500;
 }
 
+[data-bs-theme="dark"] .form-control[readonly] {
+    background-color: hsl(217, 30%, 16%);
+}
+
 /* ── Footer ── */
 .site-footer {
     border-top: 1px solid var(--bs-border-color);

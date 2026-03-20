@@ -78,6 +78,10 @@ $payload = [
     'attachments' => $attachments,
 ];
 
+if (!empty($_POST['topicId']) && ctype_digit((string) $_POST['topicId'])) {
+    $payload['topicId'] = (int) $_POST['topicId'];
+}
+
 $ch = curl_init(OSTICKET_API_URL);
 curl_setopt_array($ch, [
     CURLOPT_POST           => true,

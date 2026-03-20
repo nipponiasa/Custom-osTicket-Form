@@ -7,8 +7,11 @@ return [
 
     'field.name'         => 'Full Name',
     'field.email'        => 'Email Address',
+    'field.company'      => 'Company',
     'field.subject'      => 'Subject',
-    'field.vin'          => 'VIN',
+    'field.topic'             => 'Type of Request',
+    'field.topic_placeholder' => '— Select a type —',
+    'field.vin'               => 'VIN',
     'field.message'      => 'Message',
 
     'field.attachments'   => 'Attachments',
