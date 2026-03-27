@@ -8,7 +8,7 @@
 !.gitignore
 !.github/
 !.github/**
-!NipponiaForm.code-workspace
+!*.code-workspace
 !docs/
 !docs/**
 

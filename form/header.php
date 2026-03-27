@@ -10,10 +10,10 @@ $_res = htmlspecialchars($base, ENT_QUOTES, 'UTF-8') . '/form/resources';
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= t('page.title') ?></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/form/css/style.css">
+    <link rel="stylesheet" href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/form/resources/style.css">
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
-    <script src="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/form/js/form.js" defer></script>
+    <script src="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/form/resources/form.js" defer></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
     <header class="site-header">

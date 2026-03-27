@@ -35,9 +35,8 @@ form/
   translations.php       ← t(), form_load_language(), form_resolve_language()
   lang/
     en.php               ← English translation strings
-  css/
-    style.css            ← custom styles
-  resources/             ← static assets (εικόνες, κλπ.)
+    es.php               ← Spanish translation strings
+  resources/             ← static assets (εικόνες, custom styles κλπ.)
   .gitignore             ← εξαιρεί config.php και debug.log
   .htaccess              ← Apache: Require all denied για config.php
 ```
