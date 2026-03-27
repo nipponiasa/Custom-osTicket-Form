@@ -11,6 +11,7 @@ return [
 
     'field.brand'          => 'Brand',
     'field.vin'            => 'VIN no.',
+    'action.search'        => 'Search',
     'field.model'          => 'Model',
     'field.color'          => 'Colour',
     'field.order_no'       => 'Order no.',

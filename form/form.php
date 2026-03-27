@@ -62,9 +62,13 @@ require __DIR__ . '/header.php';
 
             <div class="mb-3">
                 <label for="vin" class="form-label"><?= t('field.vin') ?></label>
-                <input type="text" class="form-control" id="vin" name="vin"
-                       value="<?= htmlspecialchars($_POST['vin'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                       required>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="vin" name="vin"
+                           value="<?= htmlspecialchars($_POST['vin'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                           required>
+                    <button class="btn btn-primary" type="button" id="btn-vin-search"><?= t('action.search') ?></button>
+                </div>
+                <div id="error-message" class="form-text text-danger d-none">Example error message.</div>
             </div>
 
             <div class="mb-3">

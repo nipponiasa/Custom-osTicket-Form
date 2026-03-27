@@ -11,6 +11,7 @@ return [
 
     'field.brand'          => 'Marca',
     'field.vin'            => 'Chasis',
+    'action.search'        => 'Buscar',
     'field.model'          => 'Modelo',
     'field.color'          => 'Color',
     'field.order_no'       => 'No. Pedido',
