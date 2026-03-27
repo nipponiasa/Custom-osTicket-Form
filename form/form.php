@@ -138,8 +138,8 @@ require __DIR__ . '/header.php';
                 <input type="file" class="form-control" id="attachments" name="attachments[]" multiple>
             </div>
 
-            <div class="d-grid mt-4">
-                <button type="submit" class="btn btn-primary">
+            <div class="d-grid mt-5">
+                <button type="submit" class="btn btn-primary py-2">
                     <?= t('form.submit') ?>
                 </button>
             </div>

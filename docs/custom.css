@@ -1,0 +1,47 @@
+#loginBox button[type=submit] {
+	background: navy;
+    color: lavender !important;
+}
+
+form#login input::placeholder {
+	color: gray;
+}
+
+#footer{
+  
+}
+
+#nav-wrapper{
+ 	height: 48px;
+	align-content: center;
+}
+
+#nav li {
+	margin-left: 40px;
+}
+
+#sidr-right{
+  width: fit-content;
+  right: -250px;
+}
+
+#open-or-check{
+  margin-top: 20px;
+}
+
+body.index-page {
+    background-color: navy !important;
+}
+
+body.index-page, body.new-page{
+	background-image: url("/osta/img/backdrops/../../uploads/LETRERO-LUMINICO-6-2.jpg") !important;
+    background-size: cover !important;
+}
+
+body.new-page #content {
+	/*background: navy !important;*/
+  /*
+  background-image: url("/osta/img/backdrops/../../uploads/LETRERO LUMINICO 6-2.jpg") !important;
+  background-size: cover !important;
+ */
+}
