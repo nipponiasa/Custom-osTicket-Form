@@ -5,9 +5,17 @@ require __DIR__ . '/form-bootstrap.php';
 $base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/');
 
 // Pre-fill from the authenticated client; POST values take priority on re-render.
-$prefill_name  = $_POST['name']         ?? (isset($thisclient) ? $thisclient->getName()                             : '');
-$prefill_email = $_POST['email']        ?? (isset($thisclient) ? $thisclient->getEmail()                            : '');
-$prefill_org   = $_POST['organization'] ?? (isset($thisclient) ? ($thisclient->getOrganization()?->getName() ?? '') : '');
+// Agents fill all contact fields manually (on behalf of a distributor).
+$is_agent = (FORM_ROLE === 'agent');
+if ($is_agent) {
+    $prefill_name  = $_POST['name']         ?? (isset($thisstaff) ? $thisstaff->getName()  : '');
+    $prefill_email = $_POST['email']        ?? (isset($thisstaff) ? $thisstaff->getEmail() : '');
+    $prefill_org   = $_POST['organization'] ?? '';
+} else {
+    $prefill_name  = $_POST['name']         ?? (isset($thisclient) ? $thisclient->getName()                             : '');
+    $prefill_email = $_POST['email']        ?? (isset($thisclient) ? $thisclient->getEmail()                            : '');
+    $prefill_org   = $_POST['organization'] ?? (isset($thisclient) ? ($thisclient->getOrganization()?->getName() ?? '') : '');
+}
 
 // Fetch active public help topics (only available when osTicket is bootstrapped).
 $help_topics = [];
@@ -25,6 +33,7 @@ require __DIR__ . '/header.php';
 
         <form method="post" action="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/form/submit.php"
               enctype="multipart/form-data">
+            <input type="hidden" name="role" value="<?= htmlspecialchars(FORM_ROLE, ENT_QUOTES, 'UTF-8') ?>">
 
             <h2 class="border-bottom pb-2 mt-2 mb-3"><?= t('section.motorcycle') ?></h2>
 
@@ -56,7 +65,7 @@ require __DIR__ . '/header.php';
             </div>
 
             <div class="mb-3">
-                <label for="order_no" class="form-label"><?= t('field.order_no') ?> - to be hidden!</label>
+                <label for="order_no" class="form-label"><?= t('field.order_no') ?> - to be hidden and encrypted!</label>
                 <input type="text" class="form-control" id="order_no" name="order_no"
                        value="<?= htmlspecialchars($_POST['order_no'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
             </div>
@@ -70,7 +79,7 @@ require __DIR__ . '/header.php';
 
             <h2 class="border-bottom pb-2 mt-4 mb-3"><?= t('section.distributor') ?></h2>
 
-            <div class="mb-3">
+            <div class="mb-3<?= $is_agent ? ' d-none' : '' ?>">
                 <label for="organization" class="form-label"><?= t('field.company') ?></label>
                 <input type="text" class="form-control" id="organization" name="organization"
                        value="<?= htmlspecialchars($prefill_org, ENT_QUOTES, 'UTF-8') ?>"
@@ -81,14 +90,14 @@ require __DIR__ . '/header.php';
                 <label for="name" class="form-label"><?= t('field.name') ?></label>
                 <input type="text" class="form-control" id="name" name="name"
                        value="<?= htmlspecialchars($prefill_name, ENT_QUOTES, 'UTF-8') ?>"
-                       required readonly>
+                       required <?= $is_agent ? '' : 'readonly' ?>>
             </div>
 
             <div class="mb-3">
                 <label for="email" class="form-label"><?= t('field.email') ?></label>
                 <input type="email" class="form-control" id="email" name="email"
                        value="<?= htmlspecialchars($prefill_email, ENT_QUOTES, 'UTF-8') ?>"
-                       required readonly>
+                       required <?= $is_agent ? '' : 'readonly' ?>>
             </div>
 
             <h2 class="border-bottom pb-2 mt-4 mb-3"><?= t('section.description') ?></h2>

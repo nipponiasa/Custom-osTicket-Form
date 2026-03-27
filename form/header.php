@@ -18,14 +18,16 @@ $_res = htmlspecialchars($base, ENT_QUOTES, 'UTF-8') . '/form/resources';
 <body class="d-flex flex-column min-vh-100">
     <header class="site-header">
         <div class="container p-2 d-flex align-items-center justify-content-between">
-                    <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/new.php">
+                    <?php $_role_qs = defined('FORM_ROLE') && FORM_ROLE === 'agent' ? '?role=agent' : ''; ?>
+                    <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/new.php<?= $_role_qs ?>">
                         <img src="<?= $_res ?>/nipponia-logo.png" alt="Nipponia" class="site-logo">
                     </a>
                     <div class="lang-flags d-flex align-items-center gap-2">
-                        <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/new.php?lang=en">
+                        <?php $_role_amp = defined('FORM_ROLE') && FORM_ROLE === 'agent' ? '&role=agent' : ''; ?>
+                        <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/new.php?lang=en<?= $_role_amp ?>">
                             <img src="<?= $_res ?>/gb.svg" alt="English" class="flag-icon<?= $lang === 'en' ? ' flag-active' : '' ?>" title="English">
                         </a>
-                        <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/new.php?lang=es">
+                        <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/new.php?lang=es<?= $_role_amp ?>">
                             <img src="<?= $_res ?>/es.svg" alt="Español" class="flag-icon<?= $lang === 'es' ? ' flag-active' : '' ?>" title="Español">
                         </a>
                     </div>

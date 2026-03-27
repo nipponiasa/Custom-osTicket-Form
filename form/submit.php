@@ -25,14 +25,26 @@ if (!$_trusted_host || $_trusted_host !== $_request_host) {
 $_ost_root = rtrim(str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']), '/');
 require_once __DIR__ . '/config.php';
 
+// Collect and sanitize required fields.
+$_role = (isset($_POST['role']) && $_POST['role'] === 'agent') ? 'agent' : 'client';
+
 if (REQUIRE_AUTH) {
     require_once $_ost_root . '/main.inc.php';
-    require_once INCLUDE_DIR . 'class.client.php';
 
-    $thisclient = UserAuthenticationBackend::getUser();
-    if (!$thisclient || !$thisclient->getId() || !$thisclient->isValid()) {
-        http_response_code(403);
-        exit('Unauthorized');
+    if ($_role === 'agent') {
+        require_once INCLUDE_DIR . 'class.staff.php';
+        $thisstaff = StaffAuthenticationBackend::getUser();
+        if (!$thisstaff || !$thisstaff->getId() || !$thisstaff->isValid()) {
+            http_response_code(403);
+            exit('Unauthorized');
+        }
+    } else {
+        require_once INCLUDE_DIR . 'class.client.php';
+        $thisclient = UserAuthenticationBackend::getUser();
+        if (!$thisclient || !$thisclient->getId() || !$thisclient->isValid()) {
+            http_response_code(403);
+            exit('Unauthorized');
+        }
     }
 }
 
@@ -153,5 +165,5 @@ if (!$curlError && $statusCode === 201) {
     $_SESSION['form_flash'] = ['status' => 'error', 'detail' => $error_detail];
 }
 
-header('Location: ' . $_result_url);
+header('Location: ' . $_result_url . ($_role === 'agent' ? '?role=agent' : ''));
 exit;

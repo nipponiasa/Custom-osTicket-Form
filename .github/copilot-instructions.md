@@ -51,7 +51,11 @@ form/
 4. ✅ **ΟΛΟΚΛΗΡΩΘΗΚΕ** — Προσθήκη των υπόλοιπων πεδίων που απαιτούνται (χωρίς να αντλούνται ακόμα από τα ERP).
 5. ✅ **ΟΛΟΚΛΗΡΩΘΗΚΕ** — Χρήση πολυγλωσσικότητας για την προσθήκη υποστήριξης Ισπανικών. 
 6. ✅ **ΟΛΟΚΛΗΡΩΘΗΚΕ** — Σελίδα απάντησης (Πχ `success.php`) με την επιτυχή υποβολής του ticket με το ID του ticket που δημιουργήθηκε και ένα link για να το δει ο χρήστης στο osTicket client portal. .
-7. Separate auth integration για δυνατότητα να κάνουν login και οι agents του osTicket. Αυτό θα αντιμετωπιστεί ως ξεχωριστό authentication flow και θα χρειαστεί ενσωμάτωση με άλλα αρχεία του osTicket, τα οποία θα τα δούμε τότε. 
+7. ✅ **ΟΛΟΚΛΗΡΩΘΗΚΕ** — Separate auth integration για δυνατότητα να κάνουν login και οι agents του osTicket. Αυτό θα αντιμετωπιστεί ως ξεχωριστό authentication flow. Το entry point για τον agent θα είναι το `/new.php?role=agent` αντί του απλού `/new.php` για τους clients. Εμπλεκόμενα αρχεία osTicket:
+   - `scp/staff.inc.php` — ορίζει staffLoginPage(), θέτει session dest, redirects στο scp/login.php,
+   - `scp/login.php` — φόρμα login agents, επεξεργάζεται login μέσω StaffAuthenticationBackend και κάνει redirect στο dest (requested URI) μετά το login
+   - `include/class.staff.php` — κλάση Staff
+   - `include/class.auth.php` — StaffAuthenticationBackend
 8. Ανάπτυξη της λειτουργικότητας για την άντληση συμπληρωματικών δεδομένων από τα ERP συστήματα της εταιρίας και την προσθήκη τους στη φόρμα. 
 9. Προαιρετικό. Ενσωμάτωση CSRF token protection και στο custom form submit flow, ώστε το endpoint της φόρμας να προστατεύεται και με explicit anti-CSRF μηχανισμό πέρα από το login/session validation.
 

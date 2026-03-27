@@ -6,6 +6,10 @@ chdir(__DIR__ . '/..');
 // $base must point to the document root (parent of this file's directory).
 $base = rtrim(str_replace('\\', '/', dirname(dirname($_SERVER['SCRIPT_NAME']))), '/');
 
+// Detect role so form-bootstrap.php can apply the correct auth flow.
+$_form_role = (isset($_GET['role']) && $_GET['role'] === 'agent') ? 'agent' : 'client';
+define('FORM_ROLE', $_form_role);
+
 require __DIR__ . '/form-bootstrap.php';
 
 // Consume the one-time flash set by submit.php.
@@ -29,7 +33,8 @@ if (!$flash && defined('PREVIEW_RESULT') && PREVIEW_RESULT) {
 
 // No flash means someone navigated here directly.
 if (!$flash) {
-    header('Location: ' . $base . '/new.php');
+    $_role_qs = (FORM_ROLE === 'agent') ? '?role=agent' : '';
+    header('Location: ' . $base . '/new.php' . $_role_qs);
     exit;
 }
 
@@ -57,9 +62,10 @@ require __DIR__ . '/header.php';
                         <p class="mt-2"><?= t('result.ticket_number') ?> <strong><?= $ticket_id ?></strong></p>
                         <?php endif; ?>
                         <div class="d-flex flex-column flex-sm-row justify-content-center gap-2 mt-4">
-                            <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/tickets.php"
+                            <?php $_tickets_href = FORM_ROLE === 'agent' ? $base . '/scp/' : $base . '/tickets.php'; ?>
+                            <a href="<?= htmlspecialchars($_tickets_href, ENT_QUOTES, 'UTF-8') ?>"
                                class="btn btn-primary"><?= t('result.view_tickets') ?></a>
-                            <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/new.php"
+                            <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/new.php<?= FORM_ROLE === 'agent' ? '?role=agent' : '' ?>"
                                class="btn btn-outline-secondary"><?= t('result.new_ticket') ?></a>
                         </div>
                     </div>
@@ -76,7 +82,7 @@ require __DIR__ . '/header.php';
                         <p class="mt-2"><code><?= $error_detail ?></code></p>
                         <?php endif; ?>
                         <div class="mt-4">
-                            <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/new.php"
+                            <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/new.php<?= FORM_ROLE === 'agent' ? '?role=agent' : '' ?>"
                                class="btn btn-primary"><?= t('result.back') ?></a>
                         </div>
                     </div>
