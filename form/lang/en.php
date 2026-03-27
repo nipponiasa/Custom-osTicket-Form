@@ -18,9 +18,11 @@ return [
 
     'field.company'        => 'Company',
     'field.name'           => 'Name',
+    'field.distributor'    => 'Distributor',
     'field.email'          => 'E-mail',
 
     'field.subject'             => 'Subject',
+    'field.select_placeholder'  => '— Please select —',
     'field.topic'               => 'Type of Request',
     'field.topic_placeholder'   => '— Select a type —',
 

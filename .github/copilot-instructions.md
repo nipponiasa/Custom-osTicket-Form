@@ -55,8 +55,14 @@ form/
    - `scp/login.php` — φόρμα login agents, επεξεργάζεται login μέσω StaffAuthenticationBackend και κάνει redirect στο dest (requested URI) μετά το login
    - `include/class.staff.php` — κλάση Staff
    - `include/class.auth.php` — StaffAuthenticationBackend
-8. Ανάπτυξη της λειτουργικότητας για την άντληση συμπληρωματικών δεδομένων από τα ERP συστήματα της εταιρίας και την προσθήκη τους στη φόρμα. 
-9. Προαιρετικό. Ενσωμάτωση CSRF token protection και στο custom form submit flow, ώστε το endpoint της φόρμας να προστατεύεται και με explicit anti-CSRF μηχανισμό πέρα από το login/session validation.
+8. ✅ **ΟΛΟΚΛΗΡΩΘΗΚΕ** — Για τους agents, αντί για τα πεδία email, user, company, τα οποία θα έχουν και τα τρια `d-none`, θα υπάρχουν πεδία `<select>` με τα organizations και με όλους τους users του osTicket αντίστοιχα. Το πεδίο `<select>` με τους χρήστες θα έχει meta-data το organization για φιλτράρισμα με `d-none` από το πεδίο organization. Η προσέγγιση είναι: φόρτωμα όλων των δεδομένων κατά το page load (PHP → JS variable), και client-side φιλτράρισμα με JavaScript — χωρίς AJAX calls. Λεπτομέρειες υλοποίησης:
+   - **PHP query** (στο `form.php`, μόνο αν `$is_agent`): `User::objects()->values_flat('id', 'name', 'default_email__address', 'org_id', 'org__name')` — επιστρέφει όλους τους users με email και org σε ένα query (το ORM κάνει αυτόματα τα joins λόγω `'select_related' => array('default_email', 'org', ...)` στο UserModel).
+   - Απαιτείται `require_once INCLUDE_DIR . 'class.user.php'` (ή αντίστοιχο include που ήδη φορτώνεται από το bootstrap).
+   - Τα δεδομένα των users εκτίθενται ως inline JS variable (π.χ. `const USERS = <?= json_encode($users_data) ?>`), ενώ η λογική φίλτραρίσματος κλπ θα γίνει στο αρχείο `form.js` που έρχεται με defer οπότε θα έχει πρόσβαση στη μεταβλητή `USERS`.
+   - Το `<select>` των organizations populate-άρεται client-side από το `USERS` array (εξαγωγή μοναδικών `org_id`/`org_name`), χωρίς ξεχωριστό PHP query. Organizations χωρίς users δεν εμφανίζονται, κάτι που είναι επιθυμητό.
+   - Εμπλεκόμενα αρχεία osTicket (μόνο για αναφορά, δεν πειράζονται): `include/class.user.php`.
+9. Ανάπτυξη της λειτουργικότητας για την άντληση συμπληρωματικών δεδομένων από τα ERP συστήματα της εταιρίας και την προσθήκη τους στη φόρμα. 
+10. Προαιρετικό. Ενσωμάτωση CSRF token protection και στο custom form submit flow, ώστε το endpoint της φόρμας να προστατεύεται και με explicit anti-CSRF μηχανισμό πέρα από το login/session validation.
 
 ## Backend
 - Use modern PHP.

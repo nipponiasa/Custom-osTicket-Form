@@ -24,6 +24,21 @@ if (defined('INCLUDE_DIR')) {
     $help_topics = Topic::getPublicHelpTopics();
 }
 
+// Fetch all users for agent view.
+$users_data = [];
+if ($is_agent && defined('INCLUDE_DIR')) {
+    require_once INCLUDE_DIR . 'class.user.php';
+    foreach (User::objects()->values_flat('id', 'name', 'default_email__address', 'org_id', 'org__name') as $row) {
+        $users_data[] = [
+            'id'       => (int) $row[0],
+            'name'     => $row[1],
+            'email'    => $row[2],
+            'org_id'   => $row[3] ? (int) $row[3] : null,
+            'org_name' => $row[4],
+        ];
+    }
+}
+
 require __DIR__ . '/header.php';
 ?>
 <main class="flex-grow-1">
@@ -77,27 +92,47 @@ require __DIR__ . '/header.php';
                        min="0" step="1" required>
             </div>
 
+
+
             <h2 class="border-bottom pb-2 mt-4 mb-3"><?= t('section.distributor') ?></h2>
 
-            <div class="mb-3<?= $is_agent ? ' d-none' : '' ?>">
-                <label for="organization" class="form-label"><?= t('field.company') ?></label>
-                <input type="text" class="form-control" id="organization" name="organization"
-                       value="<?= htmlspecialchars($prefill_org, ENT_QUOTES, 'UTF-8') ?>"
-                       readonly>
+            <div class="user-fields<?= $is_agent ? ' d-none' : '' ?>">
+                <div class="mb-3">
+                    <label for="organization" class="form-label"><?= t('field.company') ?></label>
+                    <input type="text" class="form-control" id="organization" name="organization"
+                           value="<?= htmlspecialchars($prefill_org, ENT_QUOTES, 'UTF-8') ?>"
+                           readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label for="name" class="form-label"><?= t('field.name') ?></label>
+                    <input type="text" class="form-control" id="name" name="name"
+                           value="<?= htmlspecialchars($prefill_name, ENT_QUOTES, 'UTF-8') ?>"
+                           required <?= $is_agent ? '' : 'readonly' ?>>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label"><?= t('field.email') ?></label>
+                    <input type="email" class="form-control" id="email" name="email"
+                           value="<?= htmlspecialchars($prefill_email, ENT_QUOTES, 'UTF-8') ?>"
+                           required <?= $is_agent ? '' : 'readonly' ?>>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label for="name" class="form-label"><?= t('field.name') ?></label>
-                <input type="text" class="form-control" id="name" name="name"
-                       value="<?= htmlspecialchars($prefill_name, ENT_QUOTES, 'UTF-8') ?>"
-                       required <?= $is_agent ? '' : 'readonly' ?>>
-            </div>
+            <div class="agent-fields<?= $is_agent ? '' : ' d-none' ?>">
+                <div class="mb-3">
+                    <label for="agent_organization" class="form-label"><?= t('field.company') ?></label>
+                    <select class="form-select" id="agent_organization" name="agent_organization"
+                            data-placeholder="<?= htmlspecialchars(t('field.select_placeholder'), ENT_QUOTES, 'UTF-8') ?>">
+                    </select>
+                </div>
 
-            <div class="mb-3">
-                <label for="email" class="form-label"><?= t('field.email') ?></label>
-                <input type="email" class="form-control" id="email" name="email"
-                       value="<?= htmlspecialchars($prefill_email, ENT_QUOTES, 'UTF-8') ?>"
-                       required <?= $is_agent ? '' : 'readonly' ?>>
+                <div class="mb-3">
+                    <label for="agent_user" class="form-label"><?= t('field.distributor') ?></label>
+                    <select class="form-select" id="agent_user" name="agent_user"
+                            data-placeholder="<?= htmlspecialchars(t('field.select_placeholder'), ENT_QUOTES, 'UTF-8') ?>">
+                    </select>
+                </div>
             </div>
 
             <h2 class="border-bottom pb-2 mt-4 mb-3"><?= t('section.description') ?></h2>
@@ -147,5 +182,11 @@ require __DIR__ . '/header.php';
 
     </div>
 </main>
+
+<?php if ($is_agent): ?>
+<script>
+const USERS = <?= json_encode($users_data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>;
+</script>
+<?php endif; ?>
 
 <?php require __DIR__ . '/footer.php'; ?>
