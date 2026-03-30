@@ -22,6 +22,7 @@ if (!$_trusted_host || $_trusted_host !== $_request_host) {
 }
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/utils.php';
 
 $authenticated = true;
 if (REQUIRE_AUTH) {
@@ -68,5 +69,5 @@ if ($mock_not_found) {
 echo json_encode([
     'model'    => 'dummy-model',
     'color'    => 'dummy-color',
-    'order_no' => 'dummy-order_no',
+    'order_no' => encryptValue('dummy-order_no'),
 ]);

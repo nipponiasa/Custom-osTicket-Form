@@ -17,6 +17,8 @@ Tο project υλοποιεί μια custom φόρμα για το osTicket τη�
 
 ## Πολυγλωσσικότητα
 Η φόρμα θα πρέπει να υποστηρίζει πολλαπλές γλώσσες. Προς το παρόν, θα υποσττηρίζονται τα Αγγλικά και τα Ισπανικά, αλλά θα πρέπει να είναι εύκολο να προστεθούν και άλλες γλώσσες στο μέλλον. Θα πρέπει να υλοποιηθεί ένα σύστημα για τη διαχείριση των μεταφράσεων, ώστε να είναι εύκολο να προστεθούν νέες γλώσσες και να ενημερωθούν οι υπάρχουσες μεταφράσεις.
+Υλοποιήθηκε η αλλαγή γλώσσας. Η ενεργή γλώσσα αποθηκεύεται στο `$_SESSION['form_lang']` (π.χ. `'en'`, `'es'`), δηλαδή server-side (όχι στο sessionStοrage). 
+Ορίζεται από τη `form_resolve_language()` στο `form/translations.php`.
 
 ## Δομή Αρχείων (υλοποιημένη)
 
@@ -25,20 +27,23 @@ Tο project υλοποιεί μια custom φόρμα για το osTicket τη�
 ```
 new.php                  ← root entry point, κάνει require form/form.php
 form/
-  form-bootstrap.php     ← αρχικοποίηση auth, session και translations για τη φόρμα
+  .htaccess              ← Apache: Require all denied για config.php
+  auth.php               ← auth helpers (client & agent session validation)
   config.php             ← constants, API keys, settings (αποκλεισμένο από git και browser)
   config.example.php     ← template για το config.php (συμπεριλαμβάνεται στο git)
+  footer.php             ← κοινό HTML footer
+  form-bootstrap.php     ← αρχικοποίηση auth, session και translations για τη φόρμα
   form.php               ← HTML page skeleton (Bootstrap 5, session, lang resolution)
   header.php             ← κοινό HTML header / navbar
-  footer.php             ← κοινό HTML footer
+  result.php             ← σελίδα αποτελέσματος (success/error) μετά την υποβολή
   submit.php             ← POST endpoint που στέλνει στο osTicket API
   translations.php       ← t(), form_load_language(), form_resolve_language()
+  utils.php              ← encryptValue(), decryptValue() και άλλα utilities
+  vin_lookup.php         ← POST endpoint για VIN lookup από ERP
   lang/
     en.php               ← English translation strings
     es.php               ← Spanish translation strings
   resources/             ← static assets (εικόνες, custom styles κλπ.)
-  .gitignore             ← εξαιρεί config.php και debug.log
-  .htaccess              ← Apache: Require all denied για config.php
 ```
 
 Τα υπόλοιπα αρχεία στο workspace (`login.php`, `open.php`, `client.inc.php`, `secure.inc.php`, `include/`, κλπ.) είναι αρχεία του osTicket που συμπεριλαμβάνονται **μόνο για αναφορά** κατά την ανάπτυξη.
@@ -58,11 +63,11 @@ form/
 8. ✅ **ΟΛΟΚΛΗΡΩΘΗΚΕ** — Για τους agents, αντί για τα πεδία email, user, company, τα οποία θα έχουν και τα τρια `d-none`, θα υπάρχουν πεδία `<select>` με τα organizations και με όλους τους users του osTicket αντίστοιχα. Το πεδίο `<select>` με τους χρήστες θα έχει meta-data το organization για φιλτράρισμα με `d-none` από το πεδίο organization. Η προσέγγιση είναι: φόρτωμα όλων των δεδομένων κατά το page load (PHP → JS variable), και client-side φιλτράρισμα με JavaScript — χωρίς AJAX calls. Λεπτομέρειες υλοποίησης:
    - **PHP query** (στο `form.php`, μόνο αν `$is_agent`): `User::objects()->values_flat('id', 'name', 'default_email__address', 'org_id', 'org__name')` — επιστρέφει όλους τους users με email και org σε ένα query (το ORM κάνει αυτόματα τα joins λόγω `'select_related' => array('default_email', 'org', ...)` στο UserModel).
 9. ✅ **ΟΛΟΚΛΗΡΩΘΗΚΕ** — Ανάπτυξη της λειτουργικότητας για την άντληση συμπληρωματικών δεδομένων από τα ERP συστήματα της εταιρίας και την προσθήκη τους στη φόρμα. 
-   - Το πεδίο `VIN` να γίνει `.input-group` με κουμπί "Search" και το αντίστοιχο στα ισπανικά. Done. 
-   - Δημιουργία custom endpoint `/form/vin_lookup.php` που θα δέχεται με `POST` request ένα VIN και θα επιστρέφει τα συμπληρωματικά δεδομένα από το ERP σε JSON format. Τα δεδομένα που θα έρχονται θα είναι τα 3 πεδία `model`, `color`, και `order_no`. Αρχικά θα υλοποιηθεί επιστρέφοντας dummy data, πχ `dummy-model`, `dummy-color`, `dummy-order_no`. Το request θα γίνεται με JavaScript Fetch API όταν ο χρήστης πατάει το κουμπί "Search" δίπλα στο πεδίο VIN. Το request θα χρησιμοποιεί data σε μορφή `JSON` (αποστολή-απάντηση). Όταν τα δεδομένα επιστρέφονται, θα συμπληρώνονται από τη JavaScript τα αντίστοιχα 3 πεδία στη φόρμα. Done.
+   - Το πεδίο `VIN` να γίνει `.input-group` με κουμπί "Search" και το αντίστοιχο στα ισπανικά. 
+   - Δημιουργία custom endpoint `/form/vin_lookup.php` που θα δέχεται με `POST` request ένα VIN και θα επιστρέφει τα συμπληρωματικά δεδομένα από το ERP σε JSON format. Τα δεδομένα που θα έρχονται θα είναι τα 3 πεδία `model`, `color`, και `order_no`. Αρχικά θα υλοποιηθεί επιστρέφοντας dummy data, πχ `dummy-model`, `dummy-color`, `dummy-order_no`. Το request θα γίνεται με JavaScript Fetch API όταν ο χρήστης πατάει το κουμπί "Search" δίπλα στο πεδίο VIN. Το request θα χρησιμοποιεί data σε μορφή `JSON` (αποστολή-απάντηση). Όταν τα δεδομένα επιστρέφονται, θα συμπληρώνονται από τη JavaScript τα αντίστοιχα 3 πεδία στη φόρμα. 
    - Το endpoint θα προστατεύεται με έλεγχο login όπως και η φόρμα. Ίσως χρειαστεί το endpoint να τροποποιείται σε `/form/vin_lookup.php?role=agent` με JavaScript κατά το φόρτωμα ώστε η PHP να ξέρει ποιον έλεγχο login να κάνει (client ή agent).
-10. Advanced λειτουργίες για το endpoint `/form/vin_lookup.php`.
-   - Λειτουργία για το τι θα συμβαίνει αν δεν βρεθούν data από το ERP. Θα εμφανίζεται το `#error-message` (αφαίρεση `d-none`) και θα γράφει είτε "Data not found for this VIN" ή το error που προέκυψε. Το error μπορεί να εμφανιστεί χωρίς πρόβλημα διότι η σελίδα είναι μόνο για εσωτερική χρήση και προυποθέτει login. 
+10. ✅ **ΟΛΟΚΛΗΡΩΘΗΚΕ** — Advanced λειτουργίες για το endpoint `/form/vin_lookup.php`.
+   - Λειτουργία για το τι θα συμβαίνει αν δεν βρεθούν data από το ERP. Θα εμφανίζεται το `#error-message` (αφαίρεση `d-none`) και θα γράφει είτε "Data not found for this VIN" ή το error που προέκυψε. Το error μπορεί να εμφανιστεί χωρίς πρόβλημα διότι η σελίδα είναι μόνο για εσωτερική χρήση και προυποθέτει login.
    - Υλοποίηση PHP συναρτήσεων `encryptValue` και `decryptValue` σε ξεχωριστό αρχείο `form/utils.php` για την κρυπτογράφηση και αποκρυπτογράφηση του `order_no`. H κρυπτογράφηση θα γίνεται με `openssl_encrypt`, `openssl_decrypt` χωρίς αυξημένη ασφάλεια (μας αρκεί κάτι απλό εδώ) και το κλειδί θα είναι το `OSTICKET_API_KEY` που ήδη υπάρχει στο `config.php`, διότι η κρυπτογράφιση και αποκρυπτογράφηση θα είναι προσωρινή (οπότε δεν μας πειράζει αν αλλάξει το API key). Το `order_no` θα κρυπτογραφείται στο αρχείο `vin_lookup.php` πριν σταλεί στην JavaScript κατά την λήψη των δεδομένων από το ERP, και θα αποκρυπτογραφείται όταν υποβάλλεται η φόρμα στο `submit.php` πριν την αποστολή του στο osTicket API. Στο osTicket το `order_no` θα αποθηκεύεται σε "τελική" μορφή (δηλαδή αποκρυπτογραφημένο) για να μπορεί να διαβαστεί από τους agents. 
 11. Υλοποίηση της λειτουργικότητας για την ενημέρωση των πεδίων της φόρμας με τα πραγματικά δεδομένα από το ERP. 
 12. Προαιρετικό. Ενσωμάτωση CSRF token protection και στο custom form submit flow, ώστε το endpoint της φόρμας να προστατεύεται και με explicit anti-CSRF μηχανισμό πέρα από το login/session validation.

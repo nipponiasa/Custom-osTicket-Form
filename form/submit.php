@@ -24,6 +24,7 @@ if (!$_trusted_host || $_trusted_host !== $_request_host) {
 
 $_ost_root = rtrim(str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']), '/');
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/utils.php';
 
 // Collect and sanitize required fields.
 $_role = (isset($_POST['role']) && $_POST['role'] === 'agent') ? 'agent' : 'client';
@@ -71,6 +72,11 @@ $data['km'] = $km;
 // Collect optional fields.
 foreach (['model', 'color', 'order_no', 'organization', 'observations', 'parts_required'] as $field) {
     $data[$field] = trim($_POST[$field] ?? '');
+}
+
+// Decrypt order_no — it is encrypted by vin_lookup.php before being sent to the browser.
+if ($data['order_no'] !== '') {
+    $data['order_no'] = decryptValue($data['order_no']);
 }
 
 // Auto-generate ticket subject from model and VIN.
