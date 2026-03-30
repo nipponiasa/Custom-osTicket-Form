@@ -27,10 +27,10 @@ $_res = htmlspecialchars($base, ENT_QUOTES, 'UTF-8') . '/form/resources';
                     <div class="lang-flags d-flex align-items-center gap-2">
                         <?php $_role_amp = defined('FORM_ROLE') && FORM_ROLE === 'agent' ? '&role=agent' : ''; ?>
                         <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/new.php?lang=en<?= $_role_amp ?>">
-                            <img src="<?= $_res ?>/gb.svg" alt="English" class="flag-icon<?= $lang === 'en' ? ' flag-active' : '' ?>" title="English">
+                            <img src="<?= $_res ?>/flag-gb.svg" alt="English" class="flag-icon<?= $lang === 'en' ? ' flag-active' : '' ?>" title="English">
                         </a>
                         <a href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/new.php?lang=es<?= $_role_amp ?>">
-                            <img src="<?= $_res ?>/es.svg" alt="Español" class="flag-icon<?= $lang === 'es' ? ' flag-active' : '' ?>" title="Español">
+                            <img src="<?= $_res ?>/flag-es.svg" alt="Español" class="flag-icon<?= $lang === 'es' ? ' flag-active' : '' ?>" title="Español">
                         </a>
                     </div>
         </div>

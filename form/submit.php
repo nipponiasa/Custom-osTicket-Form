@@ -30,21 +30,12 @@ $_role = (isset($_POST['role']) && $_POST['role'] === 'agent') ? 'agent' : 'clie
 
 if (REQUIRE_AUTH) {
     require_once $_ost_root . '/main.inc.php';
+    require_once __DIR__ . '/auth.php';
 
-    if ($_role === 'agent') {
-        require_once INCLUDE_DIR . 'class.staff.php';
-        $thisstaff = StaffAuthenticationBackend::getUser();
-        if (!$thisstaff || !$thisstaff->getId() || !$thisstaff->isValid()) {
-            http_response_code(403);
-            exit('Unauthorized');
-        }
-    } else {
-        require_once INCLUDE_DIR . 'class.client.php';
-        $thisclient = UserAuthenticationBackend::getUser();
-        if (!$thisclient || !$thisclient->getId() || !$thisclient->isValid()) {
-            http_response_code(403);
-            exit('Unauthorized');
-        }
+    $authenticated = ($_role === 'agent') ? form_auth_get_agent() : form_auth_get_client();
+    if (!$authenticated) {
+        http_response_code(403);
+        exit('Unauthorized');
     }
 }
 

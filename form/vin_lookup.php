@@ -27,23 +27,13 @@ if (REQUIRE_AUTH) {
     $role = (isset($_GET['role']) && $_GET['role'] === 'agent') ? 'agent' : 'client';
 
     require_once __DIR__ . '/../main.inc.php';
+    require_once __DIR__ . '/auth.php';
 
-    if ($role === 'agent') {
-        require_once INCLUDE_DIR . 'class.staff.php';
-        $thisstaff = StaffAuthenticationBackend::getUser();
-        if (!$thisstaff || !$thisstaff->getId() || !$thisstaff->isValid()) {
-            http_response_code(401);
-            echo json_encode(['error' => 'Authentication required']);
-            exit;
-        }
-    } else {
-        require_once INCLUDE_DIR . 'class.client.php';
-        $thisclient = UserAuthenticationBackend::getUser();
-        if (!$thisclient || !$thisclient->getId() || !$thisclient->isValid()) {
-            http_response_code(401);
-            echo json_encode(['error' => 'Authentication required']);
-            exit;
-        }
+    $authenticated = ($role === 'agent') ? form_auth_get_agent() : form_auth_get_client();
+    if (!$authenticated) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Authentication required']);
+        exit;
     }
 }
 
