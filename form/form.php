@@ -189,7 +189,7 @@ require __DIR__ . '/header.php';
 
 <?php if ($is_agent): ?>
 <script>
-const USERS = <?= json_encode($users_data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>;
+window.USERS = <?= json_encode($users_data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>;
 </script>
 <?php endif; ?>
 

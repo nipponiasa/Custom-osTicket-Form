@@ -9,6 +9,7 @@ $_res = htmlspecialchars($base, ENT_QUOTES, 'UTF-8') . '/form/resources';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= t('page.title') ?></title>
+    <link rel="icon" type="image/png" href="<?= $_res ?>/favicon.png">
     <meta name="theme-color" content="#00173d" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/form/resources/style.css">
