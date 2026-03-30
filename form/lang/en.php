@@ -36,6 +36,9 @@ return [
     'validation.required'  => 'This field is required.',
     'success.ticket'       => 'Your ticket has been submitted successfully.',
     'error.generic'        => 'An error occurred. Please try again.',
+    'error.auth_required'  => 'Authentication required. Please go back to the home page.',
+    'error.vin_required'   => 'Please enter a VIN.',
+    'error.vin_not_found'  => 'Data not found for this VIN.',
 
     'result.page.title'       => 'Ticket Submitted',
     'result.success.title'    => 'Ticket submitted successfully',

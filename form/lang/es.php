@@ -36,6 +36,9 @@ return [
     'validation.required'  => 'Este campo es obligatorio.',
     'success.ticket'       => 'Tu ticket ha sido enviado correctamente.',
     'error.generic'        => 'Se ha producido un error. Por favor, inténtalo de nuevo.',
+    'error.auth_required'  => 'Autenticación requerida. Por favor, vuelve a la página de inicio.',
+    'error.vin_required'   => 'Por favor, introduce un VIN.',
+    'error.vin_not_found'  => 'No se encontraron datos para este VIN.',
 
     'result.page.title'       => 'Ticket enviado',
     'result.success.title'    => 'Ticket enviado correctamente',

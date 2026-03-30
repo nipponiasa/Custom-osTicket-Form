@@ -75,10 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
     Q('#btn-vin-search')?.on('click', function () {
         const vin = Q('#vin').value.trim();
 
-        if (!vin) {
-            Q('#error-message').set("Please enter a VIN.").show();
-            return;
-        }
         Q('#error-message').show(false);
 
         const role     = document.querySelector('input[name="role"]')?.value ?? 'client';
