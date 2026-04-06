@@ -87,7 +87,12 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify({ vin }),
         })
-            .then(async (res) => ({ ok: res.ok, data: await res.json() }))
+            .then(async (res) => {
+                const text = await res.text();
+                let data;
+                try { data = JSON.parse(text); } catch { throw new Error('Invalid server response: ' + text.slice(0, 200)); }
+                return { ok: res.ok, data };
+            })
             .then(({ ok, data }) => {
                 if (!ok) {
                     Q('#error-message').set(data.error ?? 'Unknown error').show();

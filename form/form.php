@@ -83,8 +83,8 @@ require __DIR__ . '/header.php';
                        value="<?= htmlspecialchars($_POST['color'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
             </div>
 
-            <div class="mb-3">
-                <label for="order_no" class="form-label"><?= t('field.order_no') ?> - to be hidden and encrypted!</label>
+            <div class="mb-3 d-none">
+                <label for="order_no" class="form-label"><?= t('field.order_no') ?></label>
                 <input type="text" class="form-control" id="order_no" name="order_no"
                        value="<?= htmlspecialchars($_POST['order_no'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
             </div>
