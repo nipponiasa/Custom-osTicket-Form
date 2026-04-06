@@ -72,6 +72,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     //# VIN search — fetch ERP data and populate model/color/order_no fields.
+    Q('#vin')?.on('input', function () {
+        this.classList.remove('is-valid', 'is-invalid');
+    });
+
+    // Prevent Enter from submitting the form unless the submit button is focused.
+    Q('form')?.on('keydown', function (e) {
+        if (e.key !== 'Enter' || document.activeElement?.type === 'submit') return;
+        e.preventDefault();
+        // Trigger VIN search if Enter is pressed while focused on the VIN field.
+        if (document.activeElement?.id === 'vin') Q('#btn-vin-search').click();
+    });
+
     Q('#btn-vin-search')?.on('click', function () {
         const vin = Q('#vin').value.trim();
 
@@ -96,14 +108,20 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(({ ok, data }) => {
                 if (!ok) {
                     Q('#error-message').set(data.error ?? 'Unknown error').show();
+                    Q('#vin').classList.remove('is-valid');
+                    Q('#vin').classList.add('is-invalid');
                     return;
                 }
                 Q('#model').value    = data.model    ?? '';
                 Q('#color').value    = data.color    ?? '';
                 Q('#order_no').value = data.order_no ?? '';
+                Q('#vin').classList.remove('is-invalid');
+                Q('#vin').classList.add('is-valid');
             })
             .catch(function (err) {
                 Q('#error-message').set(err.message).show();
+                Q('#vin').classList.remove('is-valid');
+                Q('#vin').classList.add('is-invalid');
             })
             .finally(function () {
                 Q('#btn-vin-search').disabled = false;

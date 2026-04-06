@@ -1,15 +1,29 @@
+body.client-side{
+	background-image: url("/osta/img/backdrops/../../uploads/LETRERO-LUMINICO-6-07.png") !important;
+    background-size: cover !important;
+}
+
+body.client-side #content {
+	background-color: hsl(229, 68%, 85%) !important;
+    h1 { color: DarkSlateGray }
+}
+
 #loginBox button[type=submit] {
 	background: navy;
     color: lavender !important;
 }
 
+form#login input{
+  background-color: hsl(240 67% 88%)
+}
 form#login input::placeholder {
-	color: gray;
+	color: darkgray;
 }
 
-#footer{
-  
+.client-choice{
+ 	background-color: hsl(214 80% 94%);
 }
+
 
 #nav-wrapper{
  	height: 48px;
@@ -29,19 +43,13 @@ form#login input::placeholder {
   margin-top: 20px;
 }
 
-body.index-page {
-    background-color: navy !important;
+#nav-inner{
+	padding: 10px 0;
 }
 
-body.index-page, body.new-page{
-	background-image: url("/osta/img/backdrops/../../uploads/LETRERO-LUMINICO-6-2.jpg") !important;
-    background-size: cover !important;
+
+
+#footer{
+  
 }
 
-body.new-page #content {
-	/*background: navy !important;*/
-  /*
-  background-image: url("/osta/img/backdrops/../../uploads/LETRERO LUMINICO 6-2.jpg") !important;
-  background-size: cover !important;
- */
-}

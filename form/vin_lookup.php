@@ -58,20 +58,23 @@ try {
         exit;
     }
 
-    // DEV: Set to true to simulate a VIN not found in the ERP.
-    $mock_not_found = false;
+    // Ensure the osTicket bootstrap (DB connection) is available even when REQUIRE_AUTH is off.
+    require_once __DIR__ . '/../main.inc.php';
 
-    // TODO: Replace with real ERP lookup.
-    if ($mock_not_found) {
+    $sql = 'SELECT Model, Color, OrderNo FROM vin_view WHERE VIN = ' . db_input($vin);
+    $res = db_query($sql);
+    $row = db_fetch_array($res);
+
+    if (!$row) {
         http_response_code(404);
         echo json_encode(['error' => t('error.vin_not_found')]);
         exit;
     }
 
     echo json_encode([
-        'model'    => 'dummy-model',
-        'color'    => 'dummy-color',
-        'order_no' => encryptValue('dummy-order_no'),
+        'model'    => $row['Model'],
+        'color'    => $row['Color'],
+        'order_no' => encryptValue($row['OrderNo']),
     ]);
 
 } catch (Throwable $e) {
