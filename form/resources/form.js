@@ -88,11 +88,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const vin = Q('#vin').value.trim();
 
         Q('#error-message').show(false);
+        Q('#search-spinner').show(true);
+        Q('#search-text').show(false);
 
         const role     = document.querySelector('input[name="role"]')?.value ?? 'client';
         const endpoint = '/form/vin_lookup.php' + (role === 'agent' ? '?role=agent' : '');
-
-        Q('#btn-vin-search').disabled = true;
 
         fetch(endpoint, {
             method:  'POST',
@@ -110,6 +110,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     Q('#error-message').set(data.error ?? 'Unknown error').show();
                     Q('#vin').classList.remove('is-valid');
                     Q('#vin').classList.add('is-invalid');
+                    Q('#model').value = '';
+                    Q('#color').value = '';
+                    Q('#order_no').value = '';
                     return;
                 }
                 Q('#model').value    = data.model    ?? '';
@@ -124,7 +127,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 Q('#vin').classList.add('is-invalid');
             })
             .finally(function () {
-                Q('#btn-vin-search').disabled = false;
+                Q('#search-spinner').show(false);
+                Q('#search-text').show(true);
             });
     });
 

@@ -88,6 +88,10 @@ label, button.btn {
     background-color: hsl(217, 30%, 16%);
 }
 
+button.btn{
+    min-width: 12ch;
+}
+
 /* ── Footer ── */
 .site-footer {
     border-top: 1px solid var(--bs-border-color);

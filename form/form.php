@@ -66,7 +66,10 @@ require __DIR__ . '/header.php';
                     <input type="text" class="form-control" id="vin" name="vin"
                            value="<?= htmlspecialchars($_POST['vin'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
                            required>
-                    <button class="btn btn-primary" type="button" id="btn-vin-search"><?= t('action.search') ?></button>
+                    <button class="btn btn-primary" type="button" id="btn-vin-search">
+                        <span id="search-spinner" class="spinner-border spinner-border-sm d-none" aria-hidden="true"></span>
+                        <span id="search-text"><?= t('action.search') ?></span>
+                    </button>
                 </div>
                 <div id="error-message" class="form-text text-danger d-none">Example error message.</div>
             </div>
