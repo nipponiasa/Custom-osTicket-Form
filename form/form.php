@@ -46,25 +46,22 @@ require __DIR__ . '/header.php';
 
         <h1 class="mb-4"><?= t('form.header') ?></h1>
 
+                <p class="text-info mb-4"><?= t('form.required_note') ?></p>
+
         <form method="post" action="<?= htmlspecialchars($base, ENT_QUOTES, 'UTF-8') ?>/form/submit.php"
               enctype="multipart/form-data">
             <input type="hidden" name="role" value="<?= htmlspecialchars(FORM_ROLE, ENT_QUOTES, 'UTF-8') ?>">
 
+            
+
             <h2 class="border-bottom pb-2 mt-2 mb-3"><?= t('section.motorcycle') ?></h2>
 
             <div class="mb-3">
-                <label for="brand" class="form-label"><?= t('field.brand') ?></label>
-                <select class="form-select" id="brand" name="brand" required>
-                    <option value="Nipponia" <?= (($_POST['brand'] ?? '') !== 'PGO') ? 'selected' : '' ?>>Nipponia</option>
-                    <option value="PGO" <?= (($_POST['brand'] ?? '') === 'PGO') ? 'selected' : '' ?>>PGO</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="vin" class="form-label"><?= t('field.vin') ?></label>
+                <label for="vin" class="form-label"><?= t('field.vin') ?><required-field></required-field></label>
                 <div class="input-group">
                     <input type="text" class="form-control" id="vin" name="vin"
                            value="<?= htmlspecialchars($_POST['vin'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                           pattern="\S{17}"
                            required>
                     <button class="btn btn-primary" type="button" id="btn-vin-search">
                         <span id="search-spinner" class="spinner-border spinner-border-sm d-none" aria-hidden="true"></span>
@@ -75,13 +72,22 @@ require __DIR__ . '/header.php';
             </div>
 
             <div class="mb-3">
-                <label for="model" class="form-label"><?= t('field.model') ?></label>
+                <label for="brand" class="form-label"><?= t('field.brand') ?><required-field></required-field></label>
+                <select class="form-select" id="brand" name="brand" required>
+                    <option value="" <?= !in_array($_POST['brand'] ?? '', ['Nipponia', 'PGO'], true) ? 'selected' : '' ?>></option>
+                    <option value="Nipponia" <?= (($_POST['brand'] ?? '') === 'Nipponia') ? 'selected' : '' ?>>Nipponia</option>
+                    <option value="PGO" <?= (($_POST['brand'] ?? '') === 'PGO') ? 'selected' : '' ?>>PGO</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="model" class="form-label"><?= t('field.model') ?><required-field></required-field></label>
                 <input type="text" class="form-control" id="model" name="model"
                        value="<?= htmlspecialchars($_POST['model'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
             </div>
 
             <div class="mb-3">
-                <label for="color" class="form-label"><?= t('field.color') ?></label>
+                <label for="color" class="form-label"><?= t('field.color') ?><required-field></required-field></label>
                 <input type="text" class="form-control" id="color" name="color"
                        value="<?= htmlspecialchars($_POST['color'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
             </div>
@@ -93,7 +99,7 @@ require __DIR__ . '/header.php';
             </div>
 
             <div class="mb-3">
-                <label for="km" class="form-label"><?= t('field.km') ?></label>
+                <label for="km" class="form-label"><?= t('field.km') ?><required-field></required-field></label>
                 <input type="number" class="form-control" id="km" name="km"
                        value="<?= htmlspecialchars($_POST['km'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
                        min="0" step="1" required>
@@ -145,7 +151,7 @@ require __DIR__ . '/header.php';
             <h2 class="border-bottom pb-2 mt-4 mb-3"><?= t('section.description') ?></h2>
 
             <div class="mb-3">
-                <label for="topicId" class="form-label"><?= t('field.topic') ?></label>
+                <label for="topicId" class="form-label"><?= t('field.topic') ?><required-field></required-field></label>
                 <select class="form-select" id="topicId" name="topicId" required>
                     <option value=""><?= t('field.topic_placeholder') ?></option>
                     <?php foreach ($help_topics as $id => $name): ?>
@@ -158,25 +164,19 @@ require __DIR__ . '/header.php';
             </div>
 
             <div class="mb-3">
-                <label for="description" class="form-label"><?= t('field.description') ?></label>
+                <label for="description" class="form-label"><?= t('field.description') ?><required-field></required-field></label>
                 <textarea class="form-control" id="description" name="description"
                           rows="5" required><?= htmlspecialchars($_POST['description'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
             </div>
 
             <div class="mb-3">
-                <label for="observations" class="form-label"><?= t('field.observations') ?></label>
+                <label for="observations" class="form-label"><?= t('field.observations') ?><required-field></required-field></label>
                 <textarea class="form-control" id="observations" name="observations"
                           rows="3"><?= htmlspecialchars($_POST['observations'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
             </div>
 
             <div class="mb-3">
-                <label for="parts_required" class="form-label"><?= t('field.parts_required') ?></label>
-                <textarea class="form-control" id="parts_required" name="parts_required"
-                          rows="3"><?= htmlspecialchars($_POST['parts_required'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
-            </div>
-
-            <div class="mb-3">
-                <label for="attachments" class="form-label"><?= t('field.attachments') ?></label>
+                <label for="attachments" class="form-label"><?= t('field.attachments') ?><required-field></required-field></label>
                 <input type="file" class="form-control" id="attachments" name="attachments[]" multiple>
             </div>
 

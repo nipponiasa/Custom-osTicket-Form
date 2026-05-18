@@ -4,6 +4,8 @@ return [
     'page.title'  => 'Workshop Service',
     'form.header' => 'Workshop Service',
     'form.submit' => 'Submit Ticket',
+    // 'form.required_note' => 'Fields marked with an asterisk (*) are required.',
+    'form.required_note' => 'All fields are required.',
 
     'section.motorcycle'  => 'Motorcycle specifications',
     'section.distributor' => 'Distributor details',
@@ -38,6 +40,7 @@ return [
     'error.generic'        => 'An error occurred. Please try again.',
     'error.auth_required'  => 'Authentication required. Please go back to the home page.',
     'error.vin_required'   => 'Please enter a VIN.',
+    'error.vin_length'     => 'The VIN number must consist of exactly 17 characters.',
     'error.vin_not_found'  => 'Data not found for this VIN.',
 
     'result.page.title'       => 'Ticket Submitted',

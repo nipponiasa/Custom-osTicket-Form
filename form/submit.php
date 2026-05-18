@@ -70,7 +70,7 @@ if ($km === false) {
 $data['km'] = $km;
 
 // Collect optional fields.
-foreach (['model', 'color', 'order_no', 'organization', 'observations', 'parts_required'] as $field) {
+foreach (['model', 'color', 'order_no', 'organization', 'observations'] as $field) {
     $data[$field] = trim($_POST[$field] ?? '');
 }
 
@@ -88,11 +88,6 @@ if ($data['observations'] !== '') {
     $message_parts[] = '';
     $message_parts[] = '[OBSERVATIONS]';
     $message_parts[] = $data['observations'];
-}
-if ($data['parts_required'] !== '') {
-    $message_parts[] = '';
-    $message_parts[] = '[PARTS REQUIRED]';
-    $message_parts[] = $data['parts_required'];
 }
 $combined_message = implode("\n", $message_parts);
 

@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //# VIN search — fetch ERP data and populate model/color/order_no fields.
     Q('#vin')?.on('input', function () {
         this.classList.remove('is-valid', 'is-invalid');
+        // Q('#brand').value = '';
     });
 
     // Prevent Enter from submitting the form unless the submit button is focused.
@@ -110,11 +111,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     Q('#error-message').set(data.error ?? 'Unknown error').show();
                     Q('#vin').classList.remove('is-valid');
                     Q('#vin').classList.add('is-invalid');
+                    Q('#brand').value = '';
                     Q('#model').value = '';
                     Q('#color').value = '';
                     Q('#order_no').value = '';
                     return;
                 }
+                Q('#brand').value    = vin.startsWith('XF1') ? 'Nipponia' : 'PGO';
                 Q('#model').value    = data.model    ?? '';
                 Q('#color').value    = data.color    ?? '';
                 Q('#order_no').value = data.order_no ?? '';
@@ -125,6 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 Q('#error-message').set(err.message).show();
                 Q('#vin').classList.remove('is-valid');
                 Q('#vin').classList.add('is-invalid');
+                Q('#brand').value = '';
             })
             .finally(function () {
                 Q('#search-spinner').show(false);

@@ -58,6 +58,12 @@ try {
         exit;
     }
 
+    if (strlen($vin) !== 17) {
+        http_response_code(400);
+        echo json_encode(['error' => t('error.vin_length')]);
+        exit;
+    }
+
     // Ensure the osTicket bootstrap (DB connection) is available even when REQUIRE_AUTH is off.
     require_once __DIR__ . '/../main.inc.php';
 

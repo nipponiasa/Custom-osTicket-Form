@@ -4,6 +4,8 @@ return [
     'page.title'  => 'Servicio de taller',
     'form.header' => 'Servicio de taller',
     'form.submit' => 'Enviar ticket',
+    // 'form.required_note' => 'Los campos marcados con un asterisco (*) son obligatorios.',
+    'form.required_note' => 'Todos los campos son obligatorios.',
 
     'section.motorcycle'  => 'Datos de la motocicleta',
     'section.distributor' => 'Datos del distribuidor',
@@ -38,6 +40,7 @@ return [
     'error.generic'        => 'Se ha producido un error. Por favor, inténtalo de nuevo.',
     'error.auth_required'  => 'Autenticación requerida. Por favor, vuelve a la página de inicio.',
     'error.vin_required'   => 'Por favor, introduce un VIN.',
+    'error.vin_length'     => 'El número VIN debe constar de exactamente 17 caracteres.',
     'error.vin_not_found'  => 'No se encontraron datos para este VIN.',
 
     'result.page.title'       => 'Ticket enviado',
