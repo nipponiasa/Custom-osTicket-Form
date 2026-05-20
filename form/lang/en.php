@@ -4,8 +4,8 @@ return [
     'page.title'  => 'Workshop Service',
     'form.header' => 'Workshop Service',
     'form.submit' => 'Submit Ticket',
-    // 'form.required_note' => 'Fields marked with an asterisk (*) are required.',
-    'form.required_note' => 'All fields are required.',
+    'form.required_note' => 'Fields marked with an asterisk (*) are required.',
+    // 'form.required_note' => 'All fields are required.',
 
     'section.motorcycle'  => 'Motorcycle specifications',
     'section.distributor' => 'Distributor details',
@@ -18,6 +18,7 @@ return [
     'field.color'          => 'Colour',
     'field.order_no'       => 'Order no.',
     'field.km'             => 'Kilometers',
+    'field.km_help'        => 'State the exact mileage. If the motorcycle has not been used, state "0".',
 
     'field.company'        => 'Company',
     'field.name'           => 'Name',
@@ -30,10 +31,13 @@ return [
     'field.topic_placeholder'   => '— Select a type —',
 
     'field.description'        => 'Description of problem or failure',
+    'field.description_help'   => 'Describe the matter as accurately as possible.',
     'field.observations'   => 'Observations',
+    'field.observations_help'  => 'If the issue cannot be depicted, please upload a photo of your motorcycle.',
     'field.parts_required' => 'Parts required',
 
     'field.attachments'    => 'Attachments',
+    'field.attachments_help' => 'Please upload at least one file (photo, video).',
 
     'validation.required'  => 'This field is required.',
     'success.ticket'       => 'Your ticket has been submitted successfully.',

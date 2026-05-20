@@ -122,9 +122,11 @@ $payload = [
     'attachments'   => $attachments,
 ];
 
+/*
 if (!empty($_POST['topicId']) && ctype_digit((string) $_POST['topicId'])) {
     $payload['topicId'] = (int) $_POST['topicId'];
 }
+*/
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();

@@ -4,8 +4,8 @@ return [
     'page.title'  => 'Servicio de taller',
     'form.header' => 'Servicio de taller',
     'form.submit' => 'Enviar ticket',
-    // 'form.required_note' => 'Los campos marcados con un asterisco (*) son obligatorios.',
-    'form.required_note' => 'Todos los campos son obligatorios.',
+    'form.required_note' => 'Los campos marcados con un asterisco (*) son obligatorios.',
+    // 'form.required_note' => 'Todos los campos son obligatorios.',
 
     'section.motorcycle'  => 'Datos de la motocicleta',
     'section.distributor' => 'Datos del distribuidor',
@@ -18,6 +18,7 @@ return [
     'field.color'          => 'Color',
     'field.order_no'       => 'No. Pedido',
     'field.km'             => 'Kilometraje',
+    'field.km_help'        => 'Indica el kilometraje exacto. Si la moto no está en uso, indica "0".',
 
     'field.company'        => 'Empresa',
     'field.name'           => 'Nombre',
@@ -30,10 +31,13 @@ return [
     'field.topic_placeholder'   => '— Selecciona un tipo —',
 
     'field.description'        => 'Descripción del problema o fallo',
+    'field.description_help'   => 'Explica el asunto con la mayor precisión posible: debes completar este campo.',
     'field.observations'   => 'Observaciones',
+    'field.observations_help'  => 'Si el problema no puede representarse, por favor sube una foto de tu motor.',
     'field.parts_required' => 'Piezas requeridas',
 
     'field.attachments'    => 'Archivos adjuntos',
+    'field.attachments_help' => 'Sube al menos un archivo (foto, video).',
 
     'validation.required'  => 'Este campo es obligatorio.',
     'success.ticket'       => 'Tu ticket ha sido enviado correctamente.',

@@ -17,12 +17,14 @@ if ($is_agent) {
     $prefill_org   = $_POST['organization'] ?? (isset($thisclient) ? ($thisclient->getOrganization()?->getName() ?? '') : '');
 }
 
+/*
 // Fetch active public help topics (only available when osTicket is bootstrapped).
 $help_topics = [];
 if (defined('INCLUDE_DIR')) {
     require_once INCLUDE_DIR . 'class.topic.php';
     $help_topics = Topic::getPublicHelpTopics();
 }
+*/
 
 // Fetch all users for agent view.
 $users_data = [];
@@ -72,7 +74,7 @@ require __DIR__ . '/header.php';
             </div>
 
             <div class="mb-3">
-                <label for="brand" class="form-label"><?= t('field.brand') ?><required-field></required-field></label>
+                <label for="brand" class="form-label"><?= t('field.brand') ?> <span class="autofill-indicator" title="Autofilled from VIN">✦</span><required-field></required-field></label>
                 <select class="form-select" id="brand" name="brand" required>
                     <option value="" <?= !in_array($_POST['brand'] ?? '', ['Nipponia', 'PGO'], true) ? 'selected' : '' ?>></option>
                     <option value="Nipponia" <?= (($_POST['brand'] ?? '') === 'Nipponia') ? 'selected' : '' ?>>Nipponia</option>
@@ -81,13 +83,13 @@ require __DIR__ . '/header.php';
             </div>
 
             <div class="mb-3">
-                <label for="model" class="form-label"><?= t('field.model') ?><required-field></required-field></label>
+                <label for="model" class="form-label"><?= t('field.model') ?> <span class="autofill-indicator" title="Autofilled from VIN">✦</span><required-field></required-field></label>
                 <input type="text" class="form-control" id="model" name="model"
                        value="<?= htmlspecialchars($_POST['model'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
             </div>
 
             <div class="mb-3">
-                <label for="color" class="form-label"><?= t('field.color') ?><required-field></required-field></label>
+                <label for="color" class="form-label"><?= t('field.color') ?> <span class="autofill-indicator" title="Autofilled from VIN">✦</span><required-field></required-field></label>
                 <input type="text" class="form-control" id="color" name="color"
                        value="<?= htmlspecialchars($_POST['color'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
             </div>
@@ -103,6 +105,7 @@ require __DIR__ . '/header.php';
                 <input type="number" class="form-control" id="km" name="km"
                        value="<?= htmlspecialchars($_POST['km'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
                        min="0" step="1" required>
+                <div class="form-text"><?= t('field.km_help') ?></div>
             </div>
 
 
@@ -150,6 +153,7 @@ require __DIR__ . '/header.php';
 
             <h2 class="border-bottom pb-2 mt-4 mb-3"><?= t('section.description') ?></h2>
 
+            <!--
             <div class="mb-3">
                 <label for="topicId" class="form-label"><?= t('field.topic') ?><required-field></required-field></label>
                 <select class="form-select" id="topicId" name="topicId" required>
@@ -162,22 +166,26 @@ require __DIR__ . '/header.php';
                     <?php endforeach; ?>
                 </select>
             </div>
+            -->
 
             <div class="mb-3">
                 <label for="description" class="form-label"><?= t('field.description') ?><required-field></required-field></label>
                 <textarea class="form-control" id="description" name="description"
                           rows="5" required><?= htmlspecialchars($_POST['description'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+                <div class="form-text"><?= t('field.description_help') ?></div>
             </div>
 
             <div class="mb-3">
-                <label for="observations" class="form-label"><?= t('field.observations') ?><required-field></required-field></label>
+                <label for="observations" class="form-label"><?= t('field.observations') ?></label>
                 <textarea class="form-control" id="observations" name="observations"
                           rows="3"><?= htmlspecialchars($_POST['observations'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+                <div class="form-text"><?= t('field.observations_help') ?></div>
             </div>
 
             <div class="mb-3">
                 <label for="attachments" class="form-label"><?= t('field.attachments') ?><required-field></required-field></label>
-                <input type="file" class="form-control" id="attachments" name="attachments[]" multiple>
+                <input type="file" class="form-control" id="attachments" name="attachments[]" multiple required>
+                <div class="form-text"><?= t('field.attachments_help') ?></div>
             </div>
 
             <div class="d-grid mt-5">
