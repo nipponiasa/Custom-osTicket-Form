@@ -20,5 +20,6 @@
 
 # Αλλά αγνόησε το config.php (περιέχει credentials), το debug.log, και τα προσωρινά αρχεία
 form/config.php
+form/config-prod.php
 form/debug.log
 ~*
